@@ -46,6 +46,33 @@
       poll: 0
       when: install.splitstack|default(False)
 
+- name: Generate fencing configuration
+  hosts: undercloud
+  any_errors_fatal: true
+  tags:
+      - deploy_preparation
+      - templates
+  tasks:
+    - name: Use instackenv provided
+      vars:
+          instack_input: "{{ (install.instackenv|default({})).file | default('') }}"
+      stat:
+          path: "~/{{ (instack_input or '~/instackenv.json') | basename }}"
+      register: instack_file_path
+
+    - set_fact:
+          instack_file: "{{ instack_file_path.stat.path }}"
+      when: instack_file_path.stat.exists
+
+    - name: fail if instackenv file is missing
+      fail:
+          msg: "instackenv file is missing"
+      when: not instack_file_path.stat.exists
+
+    - name: Generate fencing.yml
+      shell: "source ~/stackrc;openstack overcloud generate fencing --ipmi-lanplus --output ~/fencing.yaml {{ instack_file }}"
+      when: install.overcloud.fencing|default(False)
+
 - name: Deploy the Overcloud
   hosts: undercloud
   gather_facts: yes

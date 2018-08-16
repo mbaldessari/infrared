@@ -1,0 +1,4 @@
+- name: append fencing yaml overcloud deploy script
+  lineinfile:
+      dest: "~/overcloud_deploy.sh"
+      line: '-e ~/fencing.yaml \'
