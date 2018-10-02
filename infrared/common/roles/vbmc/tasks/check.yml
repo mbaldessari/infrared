@@ -4,7 +4,7 @@
 
 - block:
       - name: get vbmc node state
-        shell: "vbmc list | awk '/{{ item }}/ {print $4,$8}'"
+        shell: "vbmc --no-daemon list | awk '/{{ item }}/ {print $4,$8}'"
         register: vbmc_status
         with_items:  "{{ oc_nodes }}"
 

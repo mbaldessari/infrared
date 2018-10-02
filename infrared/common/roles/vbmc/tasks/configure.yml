@@ -63,7 +63,7 @@
   with_items: "{{ vbmc_nodes }}"
 
 - name: Get current count of used vbmc ports
-  shell: vbmc list | grep 62 | wc -l
+  shell: vbmc --no-daemon list | grep 62 | wc -l
   register: vbmc_used_ports
 
 - name: Define vbmc_port for each VM
