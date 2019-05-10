@@ -102,6 +102,8 @@
         delay: 5
         become: true
         become_user: root
+      - debug:
+            msg: "FUCK: {{ command_result }} -> {{ build }}"
   rescue:
       - name: run rhos-release without retries
         rhos_release:
