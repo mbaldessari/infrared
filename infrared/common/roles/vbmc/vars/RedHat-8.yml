@@ -1,7 +1,7 @@
 ---
 packages:
   - gcc
-  - python3-devel
+  - python36-devel
   - python3-setuptools
   - libvirt
   - libvirt-devel
