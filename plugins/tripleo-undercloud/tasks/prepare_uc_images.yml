@@ -227,5 +227,11 @@
                 replace: '\1 {{ item.key | replace("_", "-") }}'
                 # in case of node_exporter, convert it to node-exporter
             with_dict: "{{ ceph_dashb_regs }}"
+
+          - name: "(bandini) replace ceph_grafana"
+            replace:
+                path: "{{ working_dir }}/containers-prepare-parameter.yaml"
+                regexp: '(ceph_grafana_namespace:).*'
+                replace: 'ceph_grafana_namespace: docker.io/grafana'
   when:
       - (target_install_version|openstack_distribution) == 'OSP'
