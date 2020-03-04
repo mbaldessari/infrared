@@ -40,9 +40,8 @@
   - name: Install python-virtualbmc with pip
     pip:
         virtualenv: "{{ vbmc_virtualenv }}"
-        name:
-          - pyghmi <= 1.5.10
-          - virtualbmc == "{{ vbmc_version }}"
+        name: virtualbmc
+        version: "{{ vbmc_version }}"
         virtualenv_site_packages: yes
     environment:
       PATH: "{{ vbmc_home }}/.local/bin:{{ ansible_env.PATH }}"
