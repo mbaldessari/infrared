@@ -40,7 +40,9 @@
   - name: Install python-virtualbmc with pip
     pip:
         virtualenv: "{{ vbmc_virtualenv }}"
-        name: virtualbmc
+        name:
+          - pyghmi <= 1.5.10
+          - virtualbmc
         version: "{{ vbmc_version }}"
         virtualenv_site_packages: yes
     environment:
