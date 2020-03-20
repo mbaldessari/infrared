@@ -164,5 +164,9 @@
           state: stopped
           enabled: no
 
+      - name: Force mitigations off (bandini)
+        shell: |
+          grubby --args "noibrs noibpb nopti nospectre_v2 nospectre_v1 l1tf=off nospec_store_bypass_disable no_stf_barrier mds=off mitigations=off" --update-kernel=ALL
+
       - name: Update system and reboot
         include_tasks: tasks/update_and_reboot.yml
