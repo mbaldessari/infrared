@@ -133,5 +133,36 @@
             {%- endif %}
             {{- package_list }}
 
+    # bandini: disable libvirtd as it can conflict with ironic inspector dnsmasq
+      - name: disable libvirtd on the undercloud
+        systemd:
+          name: libvirtd
+          state: stopped
+          enabled: no
+
+      - name: disable libvirtd on the undercloud 1
+        systemd:
+          name: libvirtd
+          state: stopped
+          enabled: no
+
+      - name: disable libvirtd on the undercloud 2
+        systemd:
+          name: libvirtd.socket
+          state: stopped
+          enabled: no
+
+      - name: disable libvirtd on the undercloud 3
+        systemd:
+          name: libvirtd-admin.socket
+          state: stopped
+          enabled: no
+
+      - name: disable libvirtd on the undercloud 4
+        systemd:
+          name: libvirtd-ro.socket
+          state: stopped
+          enabled: no
+
       - name: Update system and reboot
         include_tasks: tasks/update_and_reboot.yml
