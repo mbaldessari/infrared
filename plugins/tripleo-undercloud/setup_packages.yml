@@ -111,6 +111,10 @@
           dstat_output_dir: '/var/log/extra'
         tags: dstat
 
+      - name: bandini versions install mortacci
+        debug:
+          msg: "Install: {{ install }} - Version: {{ install.version }}"
+
       - name: install packages on Undercloud
         package:
           name: "{{ _package_list }}"
