@@ -72,6 +72,7 @@
                 --run-command 'mkswap /swapfile' \
                 --run-command 'echo /swapfile none swap defaults 0 0 >> /etc/fstab' \
             {% endif -%}{# endif swap #}
+                --run 'echo "10.0.152.188  rhos-qe-mirror-rdu2.usersys.redhat.com download.lab.bos.redhat.com download.eng.bos.redhat.com download-node-02.eng.bos.redhat.com" >> /etc/hosts'
                 --selinux-relabel
             {% endif %}{# endif disk1 #}
 
