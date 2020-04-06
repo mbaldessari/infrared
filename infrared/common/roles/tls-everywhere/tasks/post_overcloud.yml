@@ -1,5 +1,6 @@
 ---
 - block:
+  # OSP16 adds all entries in /etc/hosts on the undercloud so we can skip this block entirely
   - name: Get overcloud entries
     shell: |
         source {{ freeipa_undercloud_rc }}
@@ -49,3 +50,4 @@
     delegate_to: "{{ freeipa_shade_node }}"
     when: "freeipa_overcloud_stack in item"
   delegate_to: "{{ freeipa_undercloud_node }}"
+  when: install.version|default(undercloud_version)|openstack_release < 16
