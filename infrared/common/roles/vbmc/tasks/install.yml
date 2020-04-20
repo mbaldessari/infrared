@@ -5,6 +5,15 @@
   - name: Gather facts (needed for install and iptables tasks)
     setup:
 
+  # bandini (bos lab sucks)
+  # When you install with ipv6 and tls-everywhere we get 2620:52:0:13b8:... on the external
+  # interface (eth2). Since openstack.org web stuff is ipv6 ready, we will try to download upper
+  # constraints for a long time untile we time out and then rety on ipv4 which will succeed
+  # let's just ignore ipv6 for now
+  - name: Create ipv4-forcing gai.conf
+    become: true
+    shell: "echo -ne 'scopev4 ::ffff:169.254.0.0/112  2\nscopev4 ::ffff:127.0.0.0/104    2\nscopev4 ::ffff:0.0.0.0/96       14\nprecedence ::ffff:0:0/96 100' > /etc/gai.conf"
+
   - name: Install packages required for python-virtualbmc pip package
     vars:
       _is_py2_host: "{{ ansible_distribution in ['CentOS', 'RedHat'] and ansible_distribution_major_version | int < 8 }}"
