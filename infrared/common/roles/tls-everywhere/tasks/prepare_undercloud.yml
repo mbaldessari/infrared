@@ -48,6 +48,13 @@
         --precreate
     register: novajoin
 
+  - name: Make sure no duplicate entries exist on undercloud.conf
+    lineinfile:
+        path: ~/undercloud.conf
+        backup: yes
+        regexp: "^(enable_novajoin|ipa_otp|undercloud_hostname|undercloud_nameservers|overcloud_domain_name)"
+        state: absent
+
   - name: Edit undercloud.conf
     blockinfile:
         path: ~/undercloud.conf
