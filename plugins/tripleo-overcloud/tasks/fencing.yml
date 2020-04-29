@@ -15,7 +15,9 @@
   when: not instack_file_path.stat.exists
 
 - name: Generate fencing.yml
-  shell: "source ~/stackrc;openstack overcloud generate fencing --ipmi-lanplus --output ~/fencing.yaml {{ instack_file }}"
+  vars:
+    overcloud_fencing_delay: "{{ (install.overcloud.fencing_delay|default(0)|int > 0) | ternary('--delay install.overcloud.fencing_delay', '') }}"
+  shell: "source ~/stackrc;openstack overcloud generate fencing {{ overcloud_fencing_delay }} --ipmi-lanplus --output ~/fencing.yaml {{ instack_file }}"
 
 - name: append fencing yaml overcloud deploy script
   lineinfile:
