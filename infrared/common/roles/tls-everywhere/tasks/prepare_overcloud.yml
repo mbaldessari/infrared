@@ -33,6 +33,10 @@
         - "{{ freeipa_templates_basedir }}/cloud-names.yaml"
         - "{{ freeipa_templates_basedir }}/public_vip.yaml"
 
+  - name: bandini GROSS HACK -> Brutally add External to all roles
+    shell:
+      sed '/    - InternalApi/a\    - External' "{{ freeipa_templates_basedir }}/composable_roles/roles/roles_data.yaml"
+
   - name: Append public_vip for IPv6
     lineinfile:
         dest: "{{ freeipa_overcloud_deploy_script }}"
