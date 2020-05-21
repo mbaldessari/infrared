@@ -2,8 +2,10 @@
 # Free IPA settings
 freeipa_node: "{{ groups['freeipa'][0] }}"
 freeipa_network_protocol: "{{ (install|default({})).get('network', {}).get('protocol', 'ipv4') }}"
-freeipa_node_ipaddress: "{{ (freeipa_network_protocol == 'ipv4') | ternary(hostvars[freeipa_node].ansible_eth2.ipv4.address, hostvars[freeipa_node].ansible_eth2.ipv6[0].address) }}"
-freeipa_node_ipv4_address: "{{ hostvars[freeipa_node].ansible_eth2.ipv4.address }}"
+freeipa_node_nic: "eth0"
+freeipa_node_ipaddress: "{{ (freeipa_network_protocol == 'ipv4') | ternary(hostvars[freeipa_node].ansible_eth0.ipv4.address, hostvars[freeipa_node].ansible_eth0.ipv6[0].address) }}"
+freeipa_node_netmask: 24
+freeipa_node_ipv4_address: "{{ hostvars[freeipa_node].ansible_eth0.ipv4.address }}"
 freeipa_setup_script: https://raw.githubusercontent.com/openstack/tripleo-heat-templates/master/ci/scripts/freeipa_setup.sh
 freeipa_working_dir: /tmp
 freeipa_admin_password: 12345678
@@ -26,7 +28,7 @@ freeipa_rhel8_dnf_modules:
 # Undercloud settings
 freeipa_undercloud_node: "{{ groups['undercloud'][0] }}"
 freeipa_undercloud_rc: "~/stackrc"
-freeipa_undercloud_ipaddress: "{{ (freeipa_network_protocol == 'ipv4') | ternary(hostvars[groups['undercloud'][0]].ansible_eth2.ipv4.address, hostvars[groups['undercloud'][0]].ansible_eth2.ipv6[0].address) }}"
+freeipa_undercloud_ipaddress: "{{ (freeipa_network_protocol == 'ipv4') | ternary(hostvars[groups['undercloud'][0]].ansible_br_ctlplane.ipv4.address, hostvars[groups['undercloud'][0]].ansible_br_ctlplane.ipv6[0].address) }}"
 
 # Overcloud settings
 freeipa_overcloud_deploy_script: "~/overcloud_deploy.sh"

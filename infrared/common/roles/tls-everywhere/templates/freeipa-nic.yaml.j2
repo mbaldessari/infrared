@@ -1,0 +1,10 @@
+DEVICE={{ freeipa_node_nic }}
+BOOTPROTO=static
+ONBOOT=yes
+{% if install.network.protocol != 'ipv4' %}
+IPV6INIT=yes
+IPV6_AUTOCONF=no
+{% endif %}
+IP{{ (install.network.protocol != 'ipv4') | ternary('V6','') }}ADDR={{ freeipa_node_ipaddress | ipaddr('address') }}
+{{ (install.network.protocol != 'ipv4') | ternary('IPV6','') }}PREFIX={{ freeipa_node_netmask }}
+NM_CONTROLLED=no

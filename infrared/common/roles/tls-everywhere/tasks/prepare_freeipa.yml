@@ -31,6 +31,7 @@
         - 'net-tools'
         - 'iptables'
         - 'iptables-services'
+        - 'network-scripts'
       state: present
     when:
         - ansible_distribution in ['CentOS', 'RedHat']
@@ -72,6 +73,17 @@
     when:
         - ansible_distribution in ['CentOS', 'RedHat']
         - ansible_distribution_major_version == '8'
+
+  - name: Configure {{ freeipa_node_nic }}
+    become: yes
+    template:
+      src: templates/freeipa-nic.yaml.j2
+      dest: /etc/sysconfig/network-scripts/ifcfg-{{ freeipa_node_nic }}
+      force: yes
+
+  - name: Bring up {{ freeipa_node_nic }}
+    become: yes
+    command: ifup {{ freeipa_node_nic }}
 
   - name: Download freeipa setup script
     get_url:
