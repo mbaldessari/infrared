@@ -1,3 +1,13 @@
+- name: Fail if using tls-everywhere and ipv6 until we have proper support
+  hosts: freeipa
+  gather_facts: no
+  any_errors_fatal: true
+  tasks:
+  - name: Fail if using tls-everywhere and ipv6 until we have proper support
+    fail:
+      msg: "IPv6 and tls-everywhere are currently not supported"
+    when: freeipa_network_protocol != 'ipv4'
+
 - name: Install rhos repos
   hosts: freeipa
   gather_facts: yes
