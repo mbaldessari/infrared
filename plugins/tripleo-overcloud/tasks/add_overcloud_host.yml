@@ -35,6 +35,10 @@
   when:
       - baremetal_name not in groups.all
 
+- name: bandini debug
+  debug:
+    msg: "{{ node_info }}"
+
 # todo(obaranov) Remove hosts from the 'unused' group
 # Currently ansible does not allow to remove existing host from a group
 - name: add hosts to host list
