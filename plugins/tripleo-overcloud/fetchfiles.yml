@@ -12,6 +12,7 @@
             dest: "{{ _destfile }}"
             backup: yes
             force: yes
+            mode: 0755
             validate_certs: no
             timeout: 5
         register: fetchfiles_undercloud_result
