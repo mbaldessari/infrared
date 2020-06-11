@@ -138,7 +138,8 @@ PLUGINS_REGISTRY = {
         'type': 'provision'
     },
     'cloud-config': {
-        'src': 'https://github.com/rhos-infra/cloud-config.git',
+        # FIXME: This is temporary to test changes to cloud-config before submitting them
+        'src': 'https://github.com/mbaldessari/cloud-config.git',
         'desc': 'Collection of overcloud configuration tasks',
         'type': 'install'
     },
