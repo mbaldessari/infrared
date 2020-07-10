@@ -36,6 +36,7 @@
         backup: yes
         marker: "### {mark} Overcloud Entries"
         content: "{{ overcloud_hosts }}"
+    when: "install.version|openstack_release < 16"
 
   - name: Removing previous Overcloud Entries
     become: true
