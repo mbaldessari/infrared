@@ -8,6 +8,10 @@
   tags: init
 
 # FIXME(yfried): dump facts?
+#
+- name: Create gai.conf on UC
+  become: true
+  shell: "echo -ne 'scopev4 ::ffff:169.254.0.0/112  2\nscopev4 ::ffff:127.0.0.0/104    2\nscopev4 ::ffff:0.0.0.0/96       14\nprecedence ::ffff:0:0/96 100' > /etc/gai.conf"
 
 - import_playbook: setup_packages.yml
   tags: install
