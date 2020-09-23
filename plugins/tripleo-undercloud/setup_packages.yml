@@ -136,6 +136,11 @@
         when: (item|splitext)[-1] != ".repo"
         with_items: "{{ custom_repos.urls|default([]) }}"
 
+      - name: Create gai.conf on UC
+        become: yes
+        shell: "echo -ne 'scopev4 ::ffff:169.254.0.0/112  2\nscopev4 ::ffff:127.0.0.0/104    2\nscopev4 ::ffff:0.0.0.0/96       14\nprecedence ::ffff:0:0/96 100' > /etc/gai.conf"
+
+
       - name: Setup and start dstat
         import_role:
           name: dstat
