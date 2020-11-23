@@ -15,6 +15,7 @@ DEFAULT_ANSIBLE_SETTINGS = dict(
         ('pipelining', 'True'),
         ('force_color', 1),
         ('show_custom_stats', 'True'),
+        ('callback_whitelist', 'profile_tasks'),
     ]),
 )
 
