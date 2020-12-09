@@ -78,8 +78,12 @@
             {% set image_name = (disk_values.import_url|default('') or topology_node.import_url|default('') or url) | basename %}
             {% if not disk_values.import_url %}
 
+            # If qemu >= 5.2.0 it will support extended_l2 which can improve I/O performance
+            PARAMS=''
+            if qemu-img create -f qcow2 -o ? |grep extended_l2; then PARAMS=',extended_l2=on,cluster_size=128k'; fi
+
             # create empty disk
-            qemu-img create -f qcow2 -o preallocation={{ disk_values.preallocation }} {{ disk_pool  }}/{{ node_image }} {{ disk_values.size }}
+            qemu-img create -f qcow2 -o preallocation={{ disk_values.preallocation }}$PARAMS {{ disk_pool  }}/{{ node_image }} {{ disk_values.size }}
 
             ## Prepare disk image
 
